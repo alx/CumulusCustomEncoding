@@ -1,7 +1,7 @@
 <?php
 
 // Include required files
-include_once (dirname (dirname (__FILE__)) . '/config/bootstrap.php');
+include_once (DOC_ROOT . '/cc-core/config/bootstrap.php');
 App::LoadClass ('Video');
 Plugin::Trigger ('encode.start');
 
@@ -113,18 +113,6 @@ try {
 
 
 
-    // Debug Log
-    $config->debug_conversion ? App::Log (CONVERSION_LOG, 'Verifying FLV video was created...') : null;
-
-    ### Verify temp FLV video was created successfully
-    if (!file_exists ($flv) || filesize ($flv) < 1024*5) throw new Exception ("The FLV file was not created. The id of the video is: $video->video_id");
-
-
-
-
-
-
-
 
 
     /////////////////////////////////////////////////////////////
@@ -152,15 +140,6 @@ try {
     ### Execute Mobile Encoding Command
     exec ($mobile_command);
     Plugin::Trigger ('encode.mobile_encode');
-
-
-
-    // Debug Log
-    $config->debug_conversion ? App::Log (CONVERSION_LOG, 'Verifying temp Mobile file was created...') : null;
-
-    ### Verify temp Mobile video was created successfully
-    if (!file_exists ($mobile_temp) || filesize ($mobile_temp) < 1024*5) throw new Exception ("The temp Mobile file was not created. The id of the video is: $video->video_id");
-
 
 
 
@@ -209,14 +188,6 @@ try {
     ### Execute Faststart command
     exec ($faststart_command);
     Plugin::Trigger ('encode.faststart');
-
-
-
-    // Debug Log
-    $config->debug_conversion ? App::Log (CONVERSION_LOG, 'Verifying final Mobile file was created...') : null;
-
-    ### Verify Mobile video was created successfully
-    if (!file_exists ($mobile) || filesize ($mobile) < 1024*5) throw new Exception ("The final Mobile file was not created. The id of the video is: $video->video_id");
 
 
 
@@ -299,15 +270,6 @@ try {
 
 
 
-    // Debug Log
-    $config->debug_conversion ? App::Log (CONVERSION_LOG, 'Verifying valid thumbnail was created...') : null;
-
-    // Verify valid thumbnail was created
-    if (!file_exists ($thumb) || filesize ($thumb) == 0) throw new Exception ("The video thumbnail is invalid. The id of the video is: $video->video_id");
-
-
-
-
 
 
 
@@ -337,14 +299,49 @@ try {
 
 
 
+    /////////////////////////////////////////////////////////////
+    //                         STEP 8                          //
+    //                        Overlay                          //
+    /////////////////////////////////////////////////////////////
+
+    # Add overlay : http://stackoverflow.com/a/10920872
+    $overlay = dirname(__FILE__) . "watermark/watermark.png";
+    $overlay_command = $ffmpeg_path . ' -i ' .  escapeshellarg($raw_video) . ' -i ' . $overlay . ' -filter_complex "overlay=main_w/2-overlay_w/2:main_h/2-overlay_h/2" -codec:a copy ' . escapeshellarg($raw_video) . ' >> ' . $debug_log . '2>&1';
+    exec ($overlay_command);
+
+    // Debug Log
+    $config->debug_conversion ? App::Log (CONVERSION_LOG, 'Overlay was applied on video...') : null;
+
+
+
+
+
+
 
 
     /////////////////////////////////////////////////////////////
-    //                         STEP 8                          //
+    //                         STEP 9                          //
+    //                       vtt sprite                        //
+    /////////////////////////////////////////////////////////////
+
+    # https://github.com/scaryguy/jwthumbs/
+    $sprite_command = 'ruby jwthumbs/jwthumbs.rb ' .  escapeshellarg($raw_video);
+    exec ($sprite_command);
+
+    // Debug Log
+    $config->debug_conversion ? App::Log (CONVERSION_LOG, 'Sprite generated for this video...') : null;
+
+
+
+
+
+
+
+    /////////////////////////////////////////////////////////////
+    //                         STEP 10                         //
     //                        Clean up                         //
     /////////////////////////////////////////////////////////////
 
-    
     try {
 
         // Debug Log
