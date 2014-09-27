@@ -1,7 +1,7 @@
 <?php
 
 // Include required files
-include_once ('../../../cc-core/config/bootstrap.php');
+include_once ('/var/www/cumulusclips/cc-core/config/bootstrap.php');
 App::LoadClass ('Video');
 Plugin::Trigger ('encode.start');
 
