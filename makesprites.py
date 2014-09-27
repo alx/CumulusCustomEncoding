@@ -30,7 +30,6 @@ THUMB_WIDTH=150 #100-150 is width recommended by JWPlayer; I like smaller files
 SKIP_FIRST=True #True to skip a thumbnail of second 1; often not a useful image, plus JWPlayer doesn't seem to show it anyway, and user knows beginning without needing preview
 SPRITE_NAME = "sprite.jpg" #jpg is much smaller than png, so using jpg
 THUMB_OUTDIR = "/var/www/cumulusclips/cc-content/uploads/thumbs"
-THUMB_URL = "/cc-content/uploads/thumbs"
 USE_UNIQUE_OUTDIR = False #true to make a unique timestamped output dir each time, else False to overwrite/replace existing outdir
 TIMESYNC_ADJUST = -.5 #set to 1 to not adjust time (gets multiplied by thumbRate); On my machine,ffmpeg snapshots show earlier images than expected timestamp by about 1/2 the thumbRate (for one vid, 10s thumbrate->images were 6s earlier than expected;45->22s early,90->44 sec early)
 logger = logging.getLogger(sys.argv[0])
@@ -145,7 +144,7 @@ def makevtt(spritefile,numsegments,coords,gridsize,writefile,thumbRate=None):
 #00:15.000 --> 00:20.000
 #/assets/preview4.jpg#xywh=160,90,320,180
 #==== END SAMPLE ========
-    basefile = os.path.join(THUMB_URL, os.path.basename(spritefile))
+    basefile = os.path.basename(spritefile)
     vtt = ["WEBVTT",""] #line buffer for file contents
     if SKIP_FIRST:
         clipstart = thumbRate  #offset time to skip the first image
