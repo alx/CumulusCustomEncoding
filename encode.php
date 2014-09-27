@@ -1,8 +1,7 @@
 <?php
 
-DOC_ROOT = '/var/www/cumulusclips';
 // Include required files
-include_once (DOC_ROOT . '/cc-core/config/bootstrap.php');
+include_once ('/var/www/cumulusclips/cc-core/config/bootstrap.php');
 App::LoadClass ('Video');
 Plugin::Trigger ('encode.start');
 
