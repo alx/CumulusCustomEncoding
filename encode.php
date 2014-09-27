@@ -334,12 +334,22 @@ try {
     //                       vtt sprite                        //
     /////////////////////////////////////////////////////////////
 
-    # https://github.com/scaryguy/jwthumbs/
-    #$sprite_command = 'ruby jwthumbs/jwthumbs.rb ' .  escapeshellarg($raw_video);
-    #exec ($sprite_command);
+    # https://github.com/vlanard/videoscripts
+    $sprite_command = 'python2.7 makesprites.py ' .  escapeshellarg($raw_video);
 
     // Debug Log
-    #$config->debug_conversion ? App::Log (CONVERSION_LOG, 'Sprite generated for this video...') : null;
+    $log_msg = "\n\n\n\n==================================================================\n";
+    $log_msg .= "Sprite CREATION\n";
+    $log_msg .= "==================================================================\n\n";
+    $log_msg .= "Sprite Creation Command: $sprite_command\n\n";
+    $log_msg .= "Sprite Creation Output:\n\n";
+    $config->debug_conversion ? App::Log (CONVERSION_LOG, "Sprite Creation Command: " . $sprite_command) : null;
+    App::Log ($debug_log, $log_msg);
+
+    exec ($sprite_command);
+
+    // Debug Log
+    $config->debug_conversion ? App::Log (CONVERSION_LOG, 'Sprite generated for this video...') : null;
 
 
 
