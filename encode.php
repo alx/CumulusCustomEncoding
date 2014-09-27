@@ -94,8 +94,10 @@ try {
     // Debug Log
     $config->debug_conversion ? App::Log (CONVERSION_LOG, "\nPreparing for: FLV Encoding...") : null;
 
+    # Add overlay : http://stackoverflow.com/a/10920872
+    $overlay = dirname(__FILE__) . "/watermark/watermark.png";
     ### Encode raw video to FLV
-    $flv_command = "$ffmpeg_path -i " . escapeshellarg($raw_video) . " " . Settings::Get('flv_options') . " " . escapeshellarg($flv) . " >> " . escapeshellarg($debug_log) . " 2>&1";
+    $flv_command = "$ffmpeg_path -i " . escapeshellarg($raw_video) . " -i " . $overlay . " -filter_complex 'overlay=main_w/2-overlay_w/2:main_h/2-overlay_h/2' " . Settings::Get('flv_options') . " " . escapeshellarg($flv) . " >> " . escapeshellarg($debug_log) . " 2>&1";
     Plugin::Trigger ('encode.before_flv_encode');
 
     // Debug Log
@@ -304,6 +306,7 @@ try {
     //                        Overlay                          //
     /////////////////////////////////////////////////////////////
 
+    /*
     # Add overlay : http://stackoverflow.com/a/10920872
     $overlay = dirname(__FILE__) . "/watermark/watermark.png";
     $overlay_command = $ffmpeg_path . ' -y -i ' .  escapeshellarg($flv) . ' -i ' . $overlay . ' -b:v 64k -filter_complex "overlay=main_w/2-overlay_w/2:main_h/2-overlay_h/2" -codec:a copy ' . escapeshellarg($flv) . ' >> ' . escapeshellarg($debug_log) . ' 2>&1';
@@ -321,7 +324,7 @@ try {
 
     // Debug Log
     $config->debug_conversion ? App::Log (CONVERSION_LOG, 'Overlay was applied on video...') : null;
-
+     */
 
 
 
