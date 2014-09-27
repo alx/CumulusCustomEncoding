@@ -102,7 +102,7 @@ def takesnaps(videofile,newoutdir,thumbRate=None):
     if not thumbRate:
         thumbRate = THUMB_RATE_SECONDS
     rate = "1/%d" % thumbRate # 1/60=1 per minute, 1/120=1 every 2 minutes
-    cmd = "ffmpeg -i %s -f image2 -bt 20M -vf fps=%s -aspect 16:9 %s/tv%%03d.jpg" % (pipes.quote(videofile), rate, pipes.quote(newoutdir))
+    cmd = "/opt/kaltura/bin/ffmpeg -i %s -f image2 -bt 20M -vf fps=%s -aspect 16:9 %s/tv%%03d.jpg" % (pipes.quote(videofile), rate, pipes.quote(newoutdir))
     doCmd (cmd)
     if SKIP_FIRST:
         #remove the first image

@@ -368,15 +368,12 @@ try {
         $config->debug_conversion ? App::Log (CONVERSION_LOG, 'Deleting raw video...') : null;
 
         ### Delete raw videos & pre-faststart files
-        Filesystem::Open();
-        Filesystem::Delete ($raw_video);
-        Filesystem::Delete ($mobile_temp);
+        #unlink($raw_video);
+        unlink($mobile_temp);
 
         ### Delete encoding log files
         if ($config->debug_conversion) {
             App::Log (CONVERSION_LOG, "Video ID: $video->video_id, has completed processing!\n");
-        } else {
-            Filesystem::Delete ($debug_log);
         }
 
     } catch (Exception $e) {
