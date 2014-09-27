@@ -95,7 +95,7 @@ try {
     $config->debug_conversion ? App::Log (CONVERSION_LOG, "\nPreparing for: FLV Encoding...") : null;
 
     ### Encode raw video to FLV
-    $flv_command = "$ffmpeg_path -i " . escapeshellarg($raw_video) . " " . Settings::Get('flv_options') . " " . escapeshellarg($flv) . " >> $debug_log 2>&1";
+    $flv_command = "$ffmpeg_path -i " . escapeshellarg($raw_video) . " " . Settings::Get('flv_options') . " " . escapeshellarg($flv) . " >> " . escapeshellarg($debug_log) . " 2>&1";
     Plugin::Trigger ('encode.before_flv_encode');
 
     // Debug Log
@@ -125,7 +125,7 @@ try {
     $config->debug_conversion ? App::Log (CONVERSION_LOG, "\nPreparing for: Mobile Encoding...") : null;
 
     ### Encode raw video to Mobile
-    $mobile_command = "$ffmpeg_path -i " . escapeshellarg($raw_video) . " " . Settings::Get('mobile_options') . " " . escapeshellarg($mobile_temp) . " >> $debug_log 2>&1";
+    $mobile_command = "$ffmpeg_path -i " . escapeshellarg($raw_video) . " " . Settings::Get('mobile_options') . " " . escapeshellarg($mobile_temp) . " >> " . escapeshellarg($debug_log) . " 2>&1";
     Plugin::Trigger ('encode.before_mobile_encode');
 
     // Debug Log
@@ -173,7 +173,7 @@ try {
     $config->debug_conversion ? App::Log (CONVERSION_LOG, "\nShifting moov atom on Mobile video...") : null;
 
     ### Execute Faststart Command
-    $faststart_command = "$qt_faststart_path " . escapeshellarg($mobile_temp) . " " . escapeshellarg($mobile) . " >> $debug_log 2>&1";
+    $faststart_command = "$qt_faststart_path " . escapeshellarg($mobile_temp) . " " . escapeshellarg($mobile) . " >> " . escapeshellarg($debug_log) . " 2>&1";
     Plugin::Trigger ('encode.before_faststart');
 
     // Debug Log
@@ -252,7 +252,7 @@ try {
     $config->debug_conversion ? App::Log (CONVERSION_LOG, "\nPreparing to create video thumbnail...") : null;
 
     ### Create video thumbnail image
-    $thumb_command = "$ffmpeg_path -i " . escapeshellarg($flv) . " -ss $thumb_position " . Settings::Get('thumb_options') . " " . escapeshellarg($thumb) . " >> $debug_log 2>&1";
+    $thumb_command = "$ffmpeg_path -i " . escapeshellarg($flv) . " -ss $thumb_position " . Settings::Get('thumb_options') . " " . escapeshellarg($thumb) . " >> " . escapeshellarg($debug_log) . " 2>&1";
     Plugin::Trigger ('encode.before_create_thumbnail');
 
     // Debug Log
@@ -306,7 +306,7 @@ try {
 
     # Add overlay : http://stackoverflow.com/a/10920872
     $overlay = dirname(__FILE__) . "watermark/watermark.png";
-    $overlay_command = $ffmpeg_path . ' -i ' .  escapeshellarg($flv) . ' -i ' . $overlay . ' -filter_complex "overlay=main_w/2-overlay_w/2:main_h/2-overlay_h/2" -codec:a copy ' . escapeshellarg($flv) . ' >> ' . $debug_log . '2>&1';
+    $overlay_command = $ffmpeg_path . ' -i ' .  escapeshellarg($flv) . ' -i ' . $overlay . ' -filter_complex "overlay=main_w/2-overlay_w/2:main_h/2-overlay_h/2" -codec:a copy ' . escapeshellarg($flv) . ' >> ' . escapeshellarg$debug_log) . '2>&1';
     exec ($overlay_command);
 
     // Debug Log
