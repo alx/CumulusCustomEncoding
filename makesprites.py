@@ -29,7 +29,6 @@ THUMB_RATE_SECONDS=5 # every Nth second take a snapshot
 THUMB_WIDTH=150 #100-150 is width recommended by JWPlayer; I like smaller files
 SKIP_FIRST=True #True to skip a thumbnail of second 1; often not a useful image, plus JWPlayer doesn't seem to show it anyway, and user knows beginning without needing preview
 SPRITE_NAME = "sprite.jpg" #jpg is much smaller than png, so using jpg
-VTTFILE_NAME = ".vtt"
 THUMB_OUTDIR = "/var/www/cumulusclips/cc-content/uploads/thumbs"
 THUMB_URL = "/cc-content/uploads/thumbs"
 USE_UNIQUE_OUTDIR = False #true to make a unique timestamped output dir each time, else False to overwrite/replace existing outdir
@@ -45,7 +44,7 @@ class SpriteTask():
         basefile_nospeed = removespeed(basefile) #strip trailing speed suffix from file/dir names, if present
         fileprefix,ext = os.path.splitext(basefile_nospeed)
         spritefile = os.path.join(THUMB_OUTDIR,"%s_%s" % (fileprefix,SPRITE_NAME))
-        vttfile = os.path.join(THUMB_OUTDIR,"%s_%s" % (fileprefix,VTTFILE_NAME))
+        vttfile = os.path.join(THUMB_OUTDIR,"%s%s" % (fileprefix,".vtt"))
         self.videofile = videofile
         self.vttfile = vttfile
         self.spritefile = spritefile
@@ -233,6 +232,9 @@ def run(task, thumbRate=None):
 
     #convert small files into a single sprite grid
     makesprite(outdir,spritefile,coords,gridsize)
+
+    # clean temporary tv files
+    os.unlink("%s/tv*.jpg" % outdir)
 
     #generate a vtt with coordinates to each image in sprite
     makevtt(spritefile,numfiles,coords,gridsize,task.getVTTFile(), thumbRate=thumbRate)
