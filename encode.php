@@ -52,7 +52,7 @@ try {
     $video->Update (array ('status' => 'processing'));
     $debug_log = LOG . '/' . $video->filename . '.log';
     $raw_video = UPLOAD_PATH . '/temp/' . $video->filename . '.' . $video->original_extension;
-    $flv = UPLOAD_PATH . '/flv/' . $video->filename . '.flv';
+    $flv = UPLOAD_PATH . '/flv/' . $video->filename . '.mp4';
     $mobile_temp = UPLOAD_PATH . '/mobile/' . $video->filename . '_temp.mp4';
     $mobile = UPLOAD_PATH . '/mobile/' . $video->filename . '.mp4';
     $thumb = UPLOAD_PATH . '/thumbs/' . $video->filename . '.jpg';
