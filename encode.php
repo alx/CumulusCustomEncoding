@@ -306,7 +306,7 @@ try {
 
     # Add overlay : http://stackoverflow.com/a/10920872
     $overlay = dirname(__FILE__) . "watermark/watermark.png";
-    $overlay_command = $ffmpeg_path . ' -i ' .  escapeshellarg($raw_video) . ' -i ' . $overlay . ' -filter_complex "overlay=main_w/2-overlay_w/2:main_h/2-overlay_h/2" -codec:a copy ' . escapeshellarg($raw_video) . ' >> ' . $debug_log . '2>&1';
+    $overlay_command = $ffmpeg_path . ' -i ' .  escapeshellarg($flv) . ' -i ' . $overlay . ' -filter_complex "overlay=main_w/2-overlay_w/2:main_h/2-overlay_h/2" -codec:a copy ' . escapeshellarg($flv) . ' >> ' . $debug_log . '2>&1';
     exec ($overlay_command);
 
     // Debug Log
@@ -325,11 +325,11 @@ try {
     /////////////////////////////////////////////////////////////
 
     # https://github.com/scaryguy/jwthumbs/
-    $sprite_command = 'ruby jwthumbs/jwthumbs.rb ' .  escapeshellarg($raw_video);
-    exec ($sprite_command);
+    #$sprite_command = 'ruby jwthumbs/jwthumbs.rb ' .  escapeshellarg($raw_video);
+    #exec ($sprite_command);
 
     // Debug Log
-    $config->debug_conversion ? App::Log (CONVERSION_LOG, 'Sprite generated for this video...') : null;
+    #$config->debug_conversion ? App::Log (CONVERSION_LOG, 'Sprite generated for this video...') : null;
 
 
 
