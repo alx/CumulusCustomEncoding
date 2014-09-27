@@ -305,14 +305,14 @@ try {
     /////////////////////////////////////////////////////////////
 
     # Add overlay : http://stackoverflow.com/a/10920872
-    $overlay = dirname(__FILE__) . "watermark/watermark.png";
+    $overlay = dirname(__FILE__) . "/watermark/watermark.png";
     $overlay_command = $ffmpeg_path . ' -i ' .  escapeshellarg($flv) . ' -i ' . $overlay . ' -filter_complex "overlay=main_w/2-overlay_w/2:main_h/2-overlay_h/2" -codec:a copy ' . escapeshellarg($flv) . ' >> ' . escapeshellarg($debug_log) . '2>&1';
 
     // Debug Log
     $log_msg = "\n\n\n\n==================================================================\n";
     $log_msg .= "Overlay CREATION\n";
     $log_msg .= "==================================================================\n\n";
-    $log_msg .= "Overlay Creation Command: $thumb_command\n\n";
+    $log_msg .= "Overlay Creation Command: $overlay_command\n\n";
     $log_msg .= "Overlay Creation Output:\n\n";
     $config->debug_conversion ? App::Log (CONVERSION_LOG, "Overlay Creation Command: " . $overlay_command) : null;
     App::Log ($debug_log, $log_msg);
