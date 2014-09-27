@@ -335,7 +335,7 @@ try {
     /////////////////////////////////////////////////////////////
 
     # https://github.com/vlanard/videoscripts
-    $sprite_command = 'python2.7 ' . DOC_ROOT . '/cc-content/plugins/CumulusCustomEncoding/makesprites.py ' .  escapeshellarg($raw_video);
+    $sprite_command = '/usr/local/bin/python2.7 ' . DOC_ROOT . '/cc-content/plugins/CumulusCustomEncoding/makesprites.py ' .  escapeshellarg($raw_video);
 
     // Debug Log
     $log_msg = "\n\n\n\n==================================================================\n";
