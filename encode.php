@@ -306,7 +306,7 @@ try {
 
     # Add overlay : http://stackoverflow.com/a/10920872
     $overlay = dirname(__FILE__) . "/watermark/watermark.png";
-    $overlay_command = $ffmpeg_path . ' -y -i ' .  escapeshellarg($flv) . ' -i ' . $overlay . ' -filter_complex "overlay=main_w/2-overlay_w/2:main_h/2-overlay_h/2" -codec:a copy ' . escapeshellarg($flv) . ' >> ' . escapeshellarg($debug_log) . ' 2>&1';
+    $overlay_command = $ffmpeg_path . ' -y -i ' .  escapeshellarg($flv) . ' -i ' . $overlay . ' -b:v 64k -filter_complex "overlay=main_w/2-overlay_w/2:main_h/2-overlay_h/2" -codec:a copy ' . escapeshellarg($flv) . ' >> ' . escapeshellarg($debug_log) . ' 2>&1';
 
     // Debug Log
     $log_msg = "\n\n\n\n==================================================================\n";
