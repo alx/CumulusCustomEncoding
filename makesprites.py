@@ -191,7 +191,7 @@ def makesprite(outdir,spritefile,coords,gridsize):
            NOT USING: convert tv*.jpg +append sprite.jpg     #SINGLE HORIZONTAL LINE of images
      base the sprite size on the number of thumbs we need to make into a grid."""
     grid = "%dx%d" % (gridsize,gridsize)
-    cmd = "montage %s/tv*.jpg -tile %s -geometry %s %s; rm %s/tv*.jpg" % (pipes.quote(outdir), grid, coords, pipes.quote(spritefile))#if video had more than 144 thumbs, would need to be bigger grid, making it big to cover all our case
+    cmd = "montage %s/tv*.jpg -tile %s -geometry %s %s" % (pipes.quote(outdir), grid, coords, pipes.quote(spritefile))#if video had more than 144 thumbs, would need to be bigger grid, making it big to cover all our case
     doCmd(cmd)
     cmd = "rm %s/tv*.jpg" % pipes.quote(outdir)
     doCmd(cmd)
