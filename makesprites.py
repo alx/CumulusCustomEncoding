@@ -260,7 +260,7 @@ def run(task, thumbRate=None):
 def addLogging():
     #CONSOLE AND FILE LOGGING
     basescript = os.path.splitext(os.path.basename(sys.argv[0]))[0]
-    LOG_FILENAME = '../../../cc-core/logs/%s.%s.log'% (basescript,datetime.datetime.now().strftime("%Y%m%d_%H%M%S")) #new log per job so we can run this program concurrently
+    LOG_FILENAME = '../cc-core/logs/%s.%s.log'% (basescript,datetime.datetime.now().strftime("%Y%m%d_%H%M%S")) #new log per job so we can run this program concurrently
     if not os.path.exists('logs'):
         os.makedirs('logs')
     logger.setLevel(logging.DEBUG)
