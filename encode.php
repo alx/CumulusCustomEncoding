@@ -1,7 +1,8 @@
 <?php
 
+DOC_ROOT = '/var/www/cumulusclips/'
 // Include required files
-include_once ('/var/www/cumulusclips/cc-core/config/bootstrap.php');
+include_once (DOC_ROOT . 'cc-core/config/bootstrap.php');
 App::LoadClass ('Video');
 Plugin::Trigger ('encode.start');
 
@@ -306,7 +307,7 @@ try {
 
     # Add overlay : http://stackoverflow.com/a/10920872
     $overlay = dirname(__FILE__) . "/watermark/watermark.png";
-    $overlay_command = $ffmpeg_path . ' -i ' .  escapeshellarg($flv) . ' -i ' . $overlay . ' -filter_complex "overlay=main_w/2-overlay_w/2:main_h/2-overlay_h/2" -codec:a copy ' . escapeshellarg($flv) . ' >> ' . escapeshellarg($debug_log) . '2>&1';
+    $overlay_command = $ffmpeg_path . ' -i ' .  escapeshellarg($flv) . ' -i ' . $overlay . ' -filter_complex "overlay=main_w/2-overlay_w/2:main_h/2-overlay_h/2" -codec:a copy ' . escapeshellarg($flv) . ' >> ' . escapeshellarg($debug_log) . ' 2>&1';
 
     // Debug Log
     $log_msg = "\n\n\n\n==================================================================\n";
@@ -335,7 +336,7 @@ try {
     /////////////////////////////////////////////////////////////
 
     # https://github.com/vlanard/videoscripts
-    $sprite_command = 'python2.7 makesprites.py ' .  escapeshellarg($raw_video);
+    $sprite_command = 'python2.7 ' . DOC_ROOT . 'cc-content/plugins/CumulusCustomEncoding/makesprites.py ' .  escapeshellarg($raw_video);
 
     // Debug Log
     $log_msg = "\n\n\n\n==================================================================\n";
