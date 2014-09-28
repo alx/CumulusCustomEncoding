@@ -97,7 +97,7 @@ try {
     # Add overlay : http://stackoverflow.com/a/10920872
     $overlay = dirname(__FILE__) . "/watermark/watermark.png";
     ### Encode raw video to FLV
-    $flv_command = "$ffmpeg_path -i " . escapeshellarg($raw_video) . " -i " . $overlay . " -filter_complex 'overlay=main_w/2-overlay_w/2:main_h/2-overlay_h/2' " . Settings::Get('flv_options') . " " . escapeshellarg($flv) . " >> " . escapeshellarg($debug_log) . " 2>&1";
+    $flv_command = "$ffmpeg_path -i " . escapeshellarg($raw_video) . " -i " . $overlay . " -filter_complex 'overlay=50:main_h-overlay_h-50' " . Settings::Get('flv_options') . " " . escapeshellarg($flv) . " >> " . escapeshellarg($debug_log) . " 2>&1";
     Plugin::Trigger ('encode.before_flv_encode');
 
     // Debug Log
