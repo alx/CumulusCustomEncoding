@@ -254,7 +254,7 @@ try {
     $config->debug_conversion ? App::Log (CONVERSION_LOG, "\nPreparing to create video thumbnail...") : null;
 
     ### Create video thumbnail image
-    $thumb_command = "$ffmpeg_path -i " . escapeshellarg($flv) . " -ss $thumb_position " . Settings::Get('thumb_options') . " " . escapeshellarg($thumb) . " >> " . escapeshellarg($debug_log) . " 2>&1";
+    $thumb_command = "$ffmpeg_path -i " . escapeshellarg($raw_video) . " -ss $thumb_position " . Settings::Get('thumb_options') . " " . escapeshellarg($thumb) . " >> " . escapeshellarg($debug_log) . " 2>&1";
     Plugin::Trigger ('encode.before_create_thumbnail');
 
     // Debug Log
@@ -338,7 +338,7 @@ try {
     /////////////////////////////////////////////////////////////
 
     # https://github.com/vlanard/videoscripts
-    $sprite_command = '/usr/local/bin/python2.7 ' . DOC_ROOT . '/cc-content/plugins/CumulusCustomEncoding/makesprites.py ' .  escapeshellarg($flv) . ' >> ' . escapeshellarg($debug_log) . ' 2>&1';
+    $sprite_command = '/usr/local/bin/python2.7 ' . DOC_ROOT . '/cc-content/plugins/CumulusCustomEncoding/makesprites.py ' .  escapeshellarg($raw_video) . ' >> ' . escapeshellarg($debug_log) . ' 2>&1';
 
 
     // Debug Log
@@ -372,7 +372,7 @@ try {
         $config->debug_conversion ? App::Log (CONVERSION_LOG, 'Deleting raw video...') : null;
 
         ### Delete raw videos & pre-faststart files
-        #unlink($raw_video);
+        unlink($raw_video);
         unlink($mobile_temp);
 
         ### Delete encoding log files
