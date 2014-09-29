@@ -41,13 +41,14 @@ class SpriteTask():
             sys.exit("File does not exist: %s" % videofile)
         basefile = os.path.basename(videofile)
         basefile_nospeed = removespeed(basefile) #strip trailing speed suffix from file/dir names, if present
+        newoutdir = makeOutDir(basefile_nospeed)
         fileprefix,ext = os.path.splitext(basefile_nospeed)
         spritefile = os.path.join(THUMB_OUTDIR,"%s_%s" % (fileprefix,SPRITE_NAME))
         vttfile = os.path.join(THUMB_OUTDIR,"%s%s" % (fileprefix,".vtt"))
         self.videofile = videofile
         self.vttfile = vttfile
         self.spritefile = spritefile
-        self.outdir = THUMB_OUTDIR
+        self.outdir = newoutdir
     def getVideoFile(self):
         return self.videofile
     def getOutdir(self):
@@ -56,6 +57,20 @@ class SpriteTask():
         return self.spritefile
     def getVTTFile(self):
         return self.vttfile
+
+def makeOutDir(videofile):
+  """create unique output dir based on video file name and current timestamp"""
+  base,ext = os.path.splitext(videofile)
+  newoutdir = "%s_%s" % (os.path.join(basepath,THUMB_OUTDIR,base),"vtt")
+  if not os.path.exists(newoutdir):
+    logger.info("Making dir: %s" % newoutdir)
+    os.makedirs(newoutdir)
+  elif os.path.exists(newoutdir)
+    files = os.listdir(newoutdir)
+    print "Removing previous contents of output directory: %s" % newoutdir
+    for f in files:
+      os.unlink(os.path.join(newoutdir,f))
+  return newoutdir
 
 def doCmd(cmd,logger=logger):  #execute a shell command and return/print its output
     logger.info( "START [%s] : %s " % (datetime.datetime.now(), cmd))
