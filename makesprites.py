@@ -30,6 +30,7 @@ THUMB_WIDTH=150 #100-150 is width recommended by JWPlayer; I like smaller files
 SKIP_FIRST=True #True to skip a thumbnail of second 1; often not a useful image, plus JWPlayer doesn't seem to show it anyway, and user knows beginning without needing preview
 SPRITE_NAME = "sprite.jpg" #jpg is much smaller than png, so using jpg
 THUMB_OUTDIR = "/var/www/cumulusclips/cc-content/uploads/thumbs"
+LOG_PATH = "/var/www/cumulusclips/cc-core/logs"
 USE_UNIQUE_OUTDIR = False #true to make a unique timestamped output dir each time, else False to overwrite/replace existing outdir
 TIMESYNC_ADJUST = -.5 #set to 1 to not adjust time (gets multiplied by thumbRate); On my machine,ffmpeg snapshots show earlier images than expected timestamp by about 1/2 the thumbRate (for one vid, 10s thumbrate->images were 6s earlier than expected;45->22s early,90->44 sec early)
 logger = logging.getLogger(sys.argv[0])
@@ -61,7 +62,7 @@ class SpriteTask():
 def makeOutDir(videofile):
   """create unique output dir based on video file name and current timestamp"""
   base,ext = os.path.splitext(videofile)
-  newoutdir = "%s_%s" % (os.path.join(basepath,THUMB_OUTDIR,base),"vtt")
+  newoutdir = "%s_%s" % (os.path.join(THUMB_OUTDIR,base),"vtt")
   if not os.path.exists(newoutdir):
     logger.info("Making dir: %s" % newoutdir)
     os.makedirs(newoutdir)
@@ -255,7 +256,7 @@ def run(task, thumbRate=None):
 def addLogging():
     #CONSOLE AND FILE LOGGING
     basescript = os.path.splitext(os.path.basename(sys.argv[0]))[0]
-    LOG_FILENAME = '../cc-core/logs/%s.%s.log'% (basescript,datetime.datetime.now().strftime("%Y%m%d_%H%M%S")) #new log per job so we can run this program concurrently
+    LOG_FILENAME = '%s/%s.%s.log'% (LOG_PATH, basescript,datetime.datetime.now().strftime("%Y%m%d_%H%M%S")) #new log per job so we can run this program concurrently
     if not os.path.exists('logs'):
         os.makedirs('logs')
     logger.setLevel(logging.DEBUG)
