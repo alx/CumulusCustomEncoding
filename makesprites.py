@@ -65,7 +65,7 @@ def makeOutDir(videofile):
   if not os.path.exists(newoutdir):
     logger.info("Making dir: %s" % newoutdir)
     os.makedirs(newoutdir)
-  elif os.path.exists(newoutdir)
+  elif os.path.exists(newoutdir):
     files = os.listdir(newoutdir)
     print "Removing previous contents of output directory: %s" % newoutdir
     for f in files:
