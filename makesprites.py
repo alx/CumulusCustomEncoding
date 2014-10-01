@@ -25,7 +25,7 @@ from dateutil import relativedelta
 #TODO determine optimal number of images/segment distance based on length of video? (so longer videos don't have huge sprites)
 
 USE_SIPS = False #True to use sips if using MacOSX (creates slightly smaller sprites), else set to False to use ImageMagick
-THUMB_RATE_SECONDS=5 # every Nth second take a snapshot
+THUMB_RATE_SECONDS=2 # every Nth second take a snapshot
 THUMB_WIDTH=150 #100-150 is width recommended by JWPlayer; I like smaller files
 SKIP_FIRST=True #True to skip a thumbnail of second 1; often not a useful image, plus JWPlayer doesn't seem to show it anyway, and user knows beginning without needing preview
 SPRITE_NAME = "sprite.jpg" #jpg is much smaller than png, so using jpg
@@ -42,8 +42,8 @@ class SpriteTask():
             sys.exit("File does not exist: %s" % videofile)
         basefile = os.path.basename(videofile)
         basefile_nospeed = removespeed(basefile) #strip trailing speed suffix from file/dir names, if present
-        newoutdir = makeOutDir(basefile_nospeed)
-        fileprefix,ext = os.path.splitext(basefile_nospeed)
+        newoutdir = makeOutDir(basefile)
+        fileprefix,ext = os.path.splitext(basefile)
         spritefile = os.path.join(THUMB_OUTDIR,"%s_%s" % (fileprefix,SPRITE_NAME))
         vttfile = os.path.join(THUMB_OUTDIR,"%s%s" % (fileprefix,".vtt"))
         self.videofile = videofile
