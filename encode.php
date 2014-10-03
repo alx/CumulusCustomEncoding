@@ -1,4 +1,5 @@
 <?php
+setlocale(LC_ALL, 'fr_FR');
 
 // Include required files
 include_once ('/var/www/cumulusclips/cc-core/config/bootstrap.php');
